@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 const Hero = () => {
   return (
     <div className=" flex justify-between px-10 py-12" >
-        <div className=" flex items-center gap-[100px]">
+        <div className=" flex items-center gap-[100px]" data-aos="zoom-out-right" data-aos-duration="3000">
 
       <div>
             <div className=" max-w-[483px] flex flex-col gap-5">
