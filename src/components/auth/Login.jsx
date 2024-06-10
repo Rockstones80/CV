@@ -7,16 +7,64 @@ import { FiMail } from "react-icons/fi";
 import women from "../../assets/women.svg";
 import Group11 from "../../assets/Group11.svg";
 import { useState } from "react";
+import { auth, provider } from "./auth";
+import { signInWithPopup } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // import { auth, provider } from "../auth/firebase"
 
 const Login = () => {
   // const provider = 'GoogleAuthProvider'
-
   const [isSignUp, setSignUp] = useState(false);
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+  
   const toggleSignUp = () => {
     setSignUp(!isSignUp);
   };
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((basit) => {
+        console.log("user created:", basit.user);
+        handleSubmit.reset();
+      })
+      .catch((err) => {
+        console.log(err.message);
+        toast.error("Error creating account. Please try again.");
+      });
+
+
+      };
+
+        const handleClick = (e) => {
+          e.preventDefault();
+        signInWithEmailAndPassword(auth, username, password)
+        .then((cred) => {
+          console.log("user logged in:", cred.user)
+          toast.success("Logged in successfully!");
+        navigate("/");
+        })
+        .catch((err) => {
+          console.log(err.message)
+          toast.error("Error logging in. Please check your credentials.");
+        })
+      }
+
+
+  function handleGoogle() {
+    signInWithPopup(auth, provider).then((user) => {
+      console.log(user);
+      toast.success("Google sign-in successful!");
+      navigate("/");
+    });
+  }
 
   return (
     <div className=" grid grid-cols-2 my-12 mx-20 bg-white rounded-3xl shadow-lg">
@@ -46,7 +94,7 @@ const Login = () => {
               </>
             )}
           </p>
-          <form action="" className="flex flex-col gap-[18px]">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-[18px]">
             {isSignUp ? (
               <div className=" flex items-center py-1 w-[356px] pl-5 rounded-xl gap-4 bg-[#F0EDFF]">
                 <FiMail />
@@ -54,17 +102,21 @@ const Login = () => {
                   type="email"
                   name="email"
                   placeholder="Email"
+                  value={email}
                   className="py-2 w-[290px] px-2 outline-0 bg-inherit text-black"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             ) : (
               <div className=" flex items-center py-1 w-[356px] pl-5 rounded-xl gap-4 bg-[#F0EDFF]">
                 <FiUser />
                 <input
-                  type="text"
-                  name="Username"
+                  type="email"
+                  name="userName"
                   placeholder="Username"
+                  value={username}
                   className="py-2 w-[290px] px-2 outline-0 bg-inherit text-black"
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
             )}
@@ -72,13 +124,19 @@ const Login = () => {
               <RiLock2Line />
               <input
                 type="password"
-                name="Password"
+                name="password"
                 placeholder="Password"
+                value={password}
                 className=" py-2 w-[290px] px-2 outline-0 bg-inherit text-black"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div className=" flex justify-center">
-              <button className="mb-6 font-bold text-[12px] w-[124px] h-[45px] bg-[#8910F1] rounded-2xl  text-white shadow-md hover:bg-purple-700 transition-colors duration-300">
+              <button
+                className="mb-6 font-bold text-[12px] w-[124px] h-[45px] bg-[#8910F1] rounded-2xl  text-white shadow-md hover:bg-purple-700 transition-colors duration-300"
+                type="submit"
+                onClick={handleClick}
+              >
                 {isSignUp ? "Sign up" : "Login Now"}
               </button>
             </div>
@@ -114,7 +172,10 @@ const Login = () => {
               </>
             )}
           </button>
-          <button className="flex items-center justify-center gap-3 w-full py-2 px-3 rounded-lg bg-white text-gray-700 border border-gray-300 mb-2 hover:bg-gray-100 transition-colors duration-300">
+          <button
+            className="flex items-center justify-center gap-3 w-full py-2 px-3 rounded-lg bg-white text-gray-700 border border-gray-300 mb-2 hover:bg-gray-100 transition-colors duration-300"
+            onClick={handleGoogle}
+          >
             <FaFacebookSquare color="blue" />
             {isSignUp ? (
               <>
@@ -154,7 +215,7 @@ const Login = () => {
       <div
         className=" bg-cover bg-center w-[100%] h-[530px] rounded-r-3xl flex justify-center p-20 relative"
         style={{
-          backgroundImage: `url(${Rectangle2})`, 
+          backgroundImage: `url(${Rectangle2})`,
         }}
       >
         <div className="  px-40 relative bg-white  bg-opacity-20 rounded-3xl border border-slate-500 flex">
@@ -167,14 +228,11 @@ const Login = () => {
             alt=""
             className=" absolute right-[93%] top-[70%]"
           />
-          
         </div>
-        <img
-          src={women}
-          alt=""
-          className="absolute bottom-20 left-4"
-        />
+        <img src={women} alt="" className="absolute bottom-20 left-4" />
       </div>
+
+      <ToastContainer /> 
     </div>
   );
 };

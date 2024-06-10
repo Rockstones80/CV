@@ -5,7 +5,9 @@ import About from "../Hompage/About"
 import Footer from "../Hompage/Footer"
 
 
+
 const Home = () => {
+  
   return (
     <div>
         <div className=" sticky top-0 z-10">
@@ -16,6 +18,7 @@ const Home = () => {
         <Feature />
         <About />
         <Footer/>
+        
         </div>
       
     </div>
