@@ -225,7 +225,7 @@ const Login = () => {
           </p>
           <img
             src={Group11}
-            alt=""
+            // alt=""
             className=" absolute right-[93%] top-[70%]"
           />
         </div>
