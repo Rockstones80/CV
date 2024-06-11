@@ -2,17 +2,17 @@ import Rectangle2 from "../../assets/Rectangle2.svg";
 import { FiUser } from "react-icons/fi";
 import { RiLock2Line } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebookSquare } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
 import women from "../../assets/women.svg";
 import Group11 from "../../assets/Group11.svg";
 import { useState } from "react";
 import { auth, provider } from "./auth";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, signInWithRedirect } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GithubAuthProvider } from "firebase/auth";
+import { toast } from "react-toastify";
+
 
 // import { auth, provider } from "../auth/firebase"
 
@@ -65,6 +65,16 @@ const Login = () => {
       navigate("/");
     });
   }
+
+  function handleGitHub() {
+    signInWithRedirect(auth, GithubAuthProvider).then((user) => {
+      console.log(user);
+      toast.success("GitHub sign-in successful!");
+      navigate("/");
+    });
+  }
+
+
 
   return (
     <div className=" grid grid-cols-2 my-12 mx-20 bg-white rounded-3xl shadow-lg">
@@ -158,7 +168,7 @@ const Login = () => {
             </span>
             <div className="flex-grow border-t border-gray-300"></div>
           </div>
-          <button className="flex items-center justify-center gap-3 w-full py-2 px-4 rounded-lg bg-white text-gray-700 border border-gray-300 mb-2 hover:bg-gray-100 transition-colors duration-300">
+          <button className="flex items-center justify-center gap-3 w-full py-2 px-4 rounded-lg bg-white text-gray-700 border border-gray-300 mb-2 hover:bg-gray-100 transition-colors duration-300" onClick={handleGoogle}>
             <FcGoogle />
             {isSignUp ? (
               <>
@@ -174,18 +184,18 @@ const Login = () => {
           </button>
           <button
             className="flex items-center justify-center gap-3 w-full py-2 px-3 rounded-lg bg-white text-gray-700 border border-gray-300 mb-2 hover:bg-gray-100 transition-colors duration-300"
-            onClick={handleGoogle}
+            onClick={handleGitHub}
           >
-            <FaFacebookSquare color="blue" />
+            <FaGithub />
             {isSignUp ? (
               <>
                 {"Sign up with"}
-                <span className="font-bold ml-[-5px]">Facebook</span>
+                <span className="font-bold ml-[-5px]">Github</span>
               </>
             ) : (
               <>
                 {"Login with"}
-                <span className="font-bold ml-[-5px]">Facebook</span>
+                <span className="font-bold ml-[-5px]">GitHub</span>
               </>
             )}
           </button>
@@ -232,7 +242,6 @@ const Login = () => {
         <img src={women} alt="" className="absolute bottom-20 left-4" />
       </div>
 
-      <ToastContainer /> 
     </div>
   );
 };
