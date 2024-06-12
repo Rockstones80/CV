@@ -30,26 +30,32 @@ const Login = () => {
   
   const handleSubmit = (e) => {
     e.preventDefault();
+    }
+
+    const handleSign = (e) => {
+    e.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
       .then((basit) => {
         console.log("user created:", basit.user);
-        handleSubmit.reset();
-      })
-      .catch((err) => {
-        console.log(err.message);
-        toast.error("Error creating account. Please try again.");
-      });
-
-
-      };
-
-        const handleClick = (e) => {
-          e.preventDefault();
-        signInWithEmailAndPassword(auth, username, password)
-        .then((cred) => {
-          console.log("user logged in:", cred.user)
-          toast.success("Logged in successfully!");
+        toast.success("Sign up successfully!");
         navigate("/");
+        // handleSign.reset();
+        })
+        .catch((err) => {
+          console.log(err.message);
+          toast.error("Error creating account. Please try again.");
+          });
+          
+          
+          };
+          
+          const handleClick = (e) => {
+            e.preventDefault();
+            signInWithEmailAndPassword(auth, username, password)
+            .then((cred) => {
+              console.log("user logged in:", cred.user)
+              toast.success("Logged in successfully!");
+              navigate("/");
         })
         .catch((err) => {
           console.log(err.message)
@@ -141,15 +147,25 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            { isSignUp ? (
+            <div className=" flex justify-center">
+              <button
+                className="mb-6 font-bold text-[12px] w-[124px] h-[45px] bg-[#8910F1] rounded-2xl  text-white shadow-md hover:bg-purple-700 transition-colors duration-300"
+                type="submit"
+                onClick={handleSign}
+              >
+              Sign up
+              </button>
+            </div> ) : ( 
             <div className=" flex justify-center">
               <button
                 className="mb-6 font-bold text-[12px] w-[124px] h-[45px] bg-[#8910F1] rounded-2xl  text-white shadow-md hover:bg-purple-700 transition-colors duration-300"
                 type="submit"
                 onClick={handleClick}
               >
-                {isSignUp ? "Sign up" : "Login Now"}
+              Log in
               </button>
-            </div>
+            </div> ) }
           </form>
           <div className="flex items-center mb-6">
             <div className="flex-grow border-t border-gray-300"></div>
