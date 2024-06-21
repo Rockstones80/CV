@@ -1,12 +1,14 @@
+import { Link } from "react-router-dom"
 
 
-const header = () => {
+const Header = () => {
   return (
-    <div>
-      header
-    
+    <div className=" flex py-5 px-12 justify-between items-center bg-gradient-to-b from-[#F4E7FF] to-[#fff]">
+        <Link to ='/'>
+        <p className=" font-bold text-3xl">Resum<span className=" text-[#8910F1]">o</span></p>
+        </Link>
     </div>
   )
 }
 
-export default header
+export default Header

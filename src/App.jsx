@@ -9,6 +9,7 @@ import Login from "../src/components/auth/Login";
 import { Suspense } from "react";
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Dashboard from "./components/Dashboard/Dashboard";
 
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="join" element={<Tabulio />} />
         <Route path="about" element={<About />} />
         <Route path="login" element={<Login />} />
+        <Route path="dashboard" element={<Dashboard />} />
         </Routes>
 
     </Suspense>

@@ -38,7 +38,7 @@ const Login = () => {
       .then((basit) => {
         console.log("user created:", basit.user);
         toast.success("Sign up successfully!");
-        navigate("/");
+        navigate("/dashboard");
         // handleSign.reset();
         })
         .catch((err) => {
@@ -55,7 +55,7 @@ const Login = () => {
             .then((cred) => {
               console.log("user logged in:", cred.user)
               toast.success("Logged in successfully!");
-              navigate("/");
+              navigate("/dashboard");
         })
         .catch((err) => {
           console.log(err.message)
@@ -68,7 +68,7 @@ const Login = () => {
     signInWithPopup(auth, provider).then((user) => {
       console.log(user);
       toast.success("Google sign-in successful!");
-      navigate("/");
+      navigate("/dashboard");
     });
   }
 
@@ -76,7 +76,7 @@ const Login = () => {
     signInWithRedirect(auth, GithubAuthProvider).then((user) => {
       console.log(user);
       toast.success("GitHub sign-in successful!");
-      navigate("/");
+      navigate("/dashboard");
     });
   }
 
