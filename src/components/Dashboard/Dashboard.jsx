@@ -3,7 +3,10 @@ import Header from "./comps/Header"
 import Addresume from "./comps/Addresume"
 import Hero from "./comps/Hero"
 
+
+  
 const Dashboard = () => {
+
   return (
     <div>
       <Header/>

@@ -8,7 +8,7 @@ import women from "../../assets/women.svg";
 import Group11 from "../../assets/Group11.svg";
 import { useState } from "react";
 import { auth, provider } from "./auth";
-import { signInWithPopup, signInWithRedirect } from "firebase/auth";
+import { signInWithPopup, signInWithRedirect  } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GithubAuthProvider } from "firebase/auth";
 import { toast } from "react-toastify";
@@ -22,7 +22,19 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  // const [user, setUser] = useState(null);
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+  //     setUser(currentUser);
+  //     if (currentUser) {
+  //       navigate("/dashboard");
+  //     }
+  //   });
+
+  //   return () => unsubscribe();
+  // }, [navigate]);
   
   const toggleSignUp = () => {
     setSignUp(!isSignUp);
@@ -79,6 +91,11 @@ const Login = () => {
       navigate("/dashboard");
     });
   }
+
+  // if (user) {
+  //   navigate("/dashboard");
+  //   return null; 
+  // }
 
 
 
